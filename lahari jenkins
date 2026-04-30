@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+	
+	
+        stage('git checkout') {
+            steps {
+                echo 'git checkout stage '
+        'git branch: 'main', url: 'https://github.com/devopstraininghub/mindcircuit17d.git'
+            }
+        }
+    }
+}        stage('build') {
+            steps {
+                echo 'building stage'
+				mvn clean install
+				sh 'mvn clean install'
+				
+            }
+        }
+    }        stage('deploy') {
+            steps {
+                echo 'deployement stage'
+				deploy adapters: [tomcat9(alternativeDeploymentContext: '', path: '', url: 'http://3.94.204.199:8090/'), tomcat9(alternativeDeploymentContext: '', path: '', url: '')], contextPath: 'insta', war: '**./*war'
+        '
+            }
+        }
+    }
